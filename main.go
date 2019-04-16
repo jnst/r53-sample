@@ -21,10 +21,5 @@ func main() {
 	}
 
 	dm := NewDomainMaster(profile, domain, hostedZoneId)
-	output, err := dm.AddAddressRecord("test", "0.0.0.0")
-	if err != nil {
-		panic(err)
-	}
-
-	dm.Polling(*output.ChangeInfo.Id)
+	dm.AddAddressRecordAndWait("test", "0.0.0.0")
 }

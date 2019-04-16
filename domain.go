@@ -62,6 +62,23 @@ func (dm *DomainMaster) AddAddressRecord(subDomainName, value string) (*route53.
 	return output, err
 }
 
+func (dm *DomainMaster) AddAddressRecordAndWait(subDomainName, value string) {
+	start := time.Now().Unix()
+
+	output, err := dm.AddAddressRecord(subDomainName, value)
+	if err != nil {
+		panic(err)
+	}
+
+	input := route53.GetChangeInput{Id: output.ChangeInfo.Id}
+	err = dm.svc.WaitUntilResourceRecordSetsChanged(&input)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Done! %d sec\n", time.Now().Unix()-start)
+}
+
 func (dm *DomainMaster) Polling(changeBatchRequestId string) {
 	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
