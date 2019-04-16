@@ -1,7 +1,7 @@
 .PHONY: start format
 
 start:
-	go run main.go
+	go run *.go
 
 format:
 	gofmt -w *.go
