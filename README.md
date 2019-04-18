@@ -13,4 +13,7 @@ on
 
 ```bash
 $ env AWS_PROFILE=example AWS_R53_DOMAIN=example.jp AWS_R53_HOSTED_ZONE_ID=************** make start
+
+Creating subdomain => test.example.jp
+Done! 33 sec
 ```
